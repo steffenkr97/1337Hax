@@ -1,6 +1,7 @@
 package de.steffenkroll;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -10,53 +11,67 @@ import org.apache.wicket.markup.html.WebPage;
 
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
-
 	private int test = 5;
-	
-	private String message= "Jene Message";
+	private String inputValue;
+	private String message = "Jene Message";
 
-	String inputVon="1337Ihnalt";
-	
+	String inputVon = "1337Ihnalt";
+	Form<?> form = new Form("form");
+
+	PropertyModel<String> messageModel = new PropertyModel<>(this, "message");
+
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 		add(new Label("version", this.getTest()));
 		// TODO Add your page's components here
-		add (new Label("nice", this.inputVon));
+		add(new Label("nice", this.inputVon));
+
+		add(new Label("msg", messageModel));
+
+		System.out.println(message);
+
+		form.add(new TextField<>("msgInput", messageModel));
+	
+		
+//		form.add(new TextField<>("integerProperty", Integer.class).setRequired(true).add(new RangeValidator<>(1, Integer.MAX_VALUE)));
+
+
+		add(form);
+
+		 
+		
+		
+		
+//		add(new Button("inButton") {
+//			public void onSubmit() {
+//				sqrt(33);
+//			}
+//		});
 
 		
-		PropertyModel<String> messageModel = new PropertyModel<>(this, "message");
-		
-		add(new Label("msg",messageModel));
-		
-		Form<?> form = new Form("form");
-		form.add(new TextField<>("msgInput",messageModel));
 		
 		
-		add(form);
 	}
 
 	int sqrt(int x) {
 
 		return x=x*x;
 	}
-	
-	
-	
-	
+
 	void setMessage(String message) {
-		this.message=message;
+		this.message = message;
 	}
-	
-	String getMessage() {
+
+	public String getMessage() {
 		return this.message;
 	}
 
 	public int getTest() {
 		return this.test;
 	}
+
 	public void setTest(int test) {
-		this.test=test;
+		this.test = test;
 	}
-	
-	
+
 }
